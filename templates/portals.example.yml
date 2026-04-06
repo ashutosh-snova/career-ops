@@ -1,497 +1,462 @@
-# Portal Scanner Configuration
-# Used by /career-ops scan to discover new offers automatically.
+# Career-Ops Portal Scanner Configuration
+# Customized for: Ashutosh Pradhan
+# Target: Senior / Staff Technical Program Manager
+# Focus: AI/ML Platforms, Developer Tools, Cloud Infrastructure, Enterprise SaaS
 #
 # Strategy (3 levels):
 #   1. Playwright → careers_url of each company (real-time, reliable)
 #   2. Greenhouse API → structured JSON (fast, Greenhouse-only)
 #   3. WebSearch with site: filters (broad discovery, may be stale)
-#
-# IMPORTANT: Each company in tracked_companies MUST have careers_url.
-#
-# HOW TO CUSTOMIZE:
-#   1. Copy this file to portals.yml in the project root
-#   2. Edit title_filter.positive with YOUR target role keywords
-#   3. Add/remove companies in tracked_companies
-#   4. Adjust search_queries for your preferred job boards
-#   5. Set enabled: false on companies you don't care about
 
 # -- Title filter --
-# The scanner uses these keywords to decide if a title is relevant.
 # At least 1 positive must match AND 0 negatives must match (case-insensitive).
 
 title_filter:
   positive:
-    # [CUSTOMIZE] Add keywords matching YOUR target roles
-    # -- AI/ML roles --
-    - "AI"
-    - "ML"
-    - "LLM"
-    - "Agent"
-    - "Agentic"
-    - "GenAI"
-    - "Generative AI"
-    - "NLP"
-    - "LLMOps"
-    - "MLOps"
-    - "Voice AI"
-    - "Conversational AI"
-    - "Speech"
-    # -- Engineering roles --
-    - "Platform Engineer"
-    - "Solutions Architect"
-    - "Solutions Engineer"
-    - "Forward Deployed"
-    - "Deployed Engineer"
-    - "Customer Engineer"
-    - "Integration Engineer"
-    # -- Product roles --
-    - "Product Manager"
-    - "Technical PM"
-    # -- Automation roles --
-    - "Automation"
-    - "Hyperautomation"
-    - "Low-Code"
-    - "No-Code"
-    - "GTM Engineer"
-    - "RevOps"
-    - "Business Systems"
-    - "Internal Tools"
-    - "Transformation"
+    # -- Core TPM titles --
+    - "Technical Program Manager"
+    - "TPM"
+    - "Sr. TPM"
+    - "Senior TPM"
+    - "Staff TPM"
+    - "Principal TPM"
+    - "Lead TPM"
+    # -- Program / Project Management --
+    - "Program Manager"
+    - "Senior Program Manager"
+    - "Staff Program Manager"
+    - "Engineering Program Manager"
+    - "Technology Program Manager"
+    # -- AI/ML specific TPM --
+    - "AI Program Manager"
+    - "ML Program Manager"
+    - "AI/ML Program Manager"
+    - "LLM Program Manager"
+    - "Generative AI Program Manager"
+    # -- Developer / Platform TPM --
+    - "Developer Platform"
+    - "Platform Program Manager"
+    - "Developer Experience"
+    - "DevEx Program"
+    # -- Adjacent roles (stretch) --
+    - "Technical Product Manager"
+    - "Documentation Program Manager"
+    - "Content Program Manager"
+    - "Knowledge Program Manager"
+
   negative:
-    # [CUSTOMIZE] Add keywords for roles you want to exclude
+    # Exclude non-relevant roles
     - "Junior"
     - "Intern"
+    - "Associate Program Manager"
+    - "Coordinator"
+    - "Marketing Program Manager"
+    - "HR Program"
+    - "Recruiting Program"
+    - "Finance Program"
+    - "Legal Program"
+    - "Compliance Program"
+    - "Sales Program Manager"
+    - "Event Program"
+    - "Clinical Program"
+    - "Healthcare Program"
+    - "Supply Chain"
+    - "Procurement"
     - ".NET"
-    - "Java "
     - "iOS"
     - "Android"
-    - "PHP"
-    - "Ruby"
-    - "Embedded"
-    - "Firmware"
-    - "FPGA"
-    - "ASIC"
     - "Blockchain"
     - "Web3"
     - "Crypto"
-    - "Salesforce Admin"
-    - "SAP "
-    - "Oracle EBS"
-    - "Mainframe"
     - "COBOL"
+    - "Mainframe"
+
   seniority_boost:
     # These prefixes add relevance but are not required
     - "Senior"
+    - "Sr."
     - "Staff"
     - "Principal"
     - "Lead"
-    - "Head"
+    - "Head of"
     - "Director"
+    - "Group"
 
 # -- Search queries --
 # Each query triggers a WebSearch. Use site: to filter by portal.
-# The scanner extracts title, URL, and company from results.
 
 search_queries:
+
   # -- Ashby --
-  - name: Ashby — AI PM
-    query: 'site:jobs.ashbyhq.com "AI Product Manager" OR "Senior Product Manager AI" remote'
+  - name: Ashby — TPM Core
+    query: 'site:jobs.ashbyhq.com "Technical Program Manager" OR "TPM" remote senior'
     enabled: true
 
-  - name: Ashby — Solutions Architect
-    query: 'site:jobs.ashbyhq.com "Solutions Architect" AI OR automation remote'
+  - name: Ashby — AI/ML TPM
+    query: 'site:jobs.ashbyhq.com "Program Manager" "AI" OR "ML" OR "LLM" OR "Generative" remote'
     enabled: true
 
-  - name: Ashby — AI Engineer
-    query: 'site:jobs.ashbyhq.com "AI Engineer" OR "LLM Engineer" OR "Forward Deployed" remote'
-    enabled: true
-
-  - name: Ashby — Agentic
-    query: 'site:jobs.ashbyhq.com "Agentic" OR "AI Agent" OR "Automation Architect" remote'
+  - name: Ashby — Platform & DevEx TPM
+    query: 'site:jobs.ashbyhq.com "Program Manager" "platform" OR "developer experience" OR "developer tools" remote'
     enabled: true
 
   # -- Greenhouse --
-  - name: Greenhouse — AI PM
-    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "AI Product Manager" OR "Senior Product Manager" AI remote'
+  - name: Greenhouse — TPM Core
+    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "Technical Program Manager" remote senior'
     enabled: true
 
-  - name: Greenhouse — SA & FDE
-    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "Solutions Architect" OR "Forward Deployed" AI remote'
+  - name: Greenhouse — AI/ML TPM
+    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "Program Manager" "AI" OR "ML" OR "LLM" remote senior'
     enabled: true
 
-  - name: Greenhouse — AI Engineer
-    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "AI Engineer" OR "LLM" OR "Agentic" remote'
+  - name: Greenhouse — Engineering Program Manager
+    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "Engineering Program Manager" OR "Staff TPM" remote'
+    enabled: true
+
+  - name: Greenhouse — Developer Platform TPM
+    query: 'site:job-boards.greenhouse.io "Program Manager" "developer platform" OR "developer experience" OR "API" remote'
     enabled: true
 
   # -- Lever --
-  - name: Lever — AI PM
-    query: 'site:jobs.lever.co "AI Product Manager" OR "Solutions Architect" AI remote'
+  - name: Lever — TPM
+    query: 'site:jobs.lever.co "Technical Program Manager" OR "Senior Program Manager" remote'
     enabled: true
 
-  - name: Lever — AI Roles
-    query: 'site:jobs.lever.co "AI Engineer" OR "Agentic" OR "LLMOps" OR "Automation" remote'
+  - name: Lever — AI Program Manager
+    query: 'site:jobs.lever.co "Program Manager" "AI" OR "ML" OR "LLM" OR "Generative AI" remote senior'
     enabled: true
 
   # -- Wellfound (startups) --
-  - name: Wellfound — AI PM
-    query: 'site:wellfound.com "AI Product Manager" OR "AI Solutions" remote'
+  - name: Wellfound — TPM AI Startups
+    query: 'site:wellfound.com "Technical Program Manager" OR "TPM" "AI" OR "ML" remote senior'
     enabled: true
 
   # -- Workable --
-  - name: Workable — AI Roles
-    query: 'site:apply.workable.com "AI" "Product Manager" OR "Solutions Architect" OR "AI Engineer" remote'
+  - name: Workable — TPM
+    query: 'site:apply.workable.com "Technical Program Manager" OR "Program Manager" "AI" OR "platform" remote senior'
     enabled: true
 
-  # -- No-Code / Low-Code / Automation --
-  - name: Ashby — No-Code & Automation
-    query: 'site:jobs.ashbyhq.com "no-code" OR "low-code" OR "automation engineer" OR "n8n" OR "Make" OR "Airtable" remote senior'
+  # -- Broad search --
+  - name: LinkedIn-style — Senior TPM AI/ML
+    query: '"Senior Technical Program Manager" OR "Staff TPM" "AI" OR "ML" OR "cloud" remote 2025'
     enabled: true
 
-  - name: Greenhouse — No-Code & Automation
-    query: 'site:job-boards.greenhouse.io "no-code" OR "low-code" OR "automation engineer" OR "business systems" senior remote'
+  - name: Broad — TPM Developer Tools
+    query: '"Technical Program Manager" "developer tools" OR "developer platform" OR "API platform" remote senior'
     enabled: true
 
-  - name: GTM Engineer — All portals
-    query: '"GTM Engineer" OR "RevOps Engineer" OR "Growth Engineer" automation Airtable OR Make OR Clay remote'
+  - name: Broad — TPM Cloud Infrastructure
+    query: '"Technical Program Manager" "cloud" OR "AWS" OR "infrastructure" remote senior 2025'
     enabled: true
 
-  # -- Voice AI & Conversational AI --
-  - name: Voice AI — FDE & SA
-    query: 'site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com "Voice AI" OR "Conversational AI" OR "Speech" "Solutions" OR "Forward Deployed" OR "Customer Engineer"'
-    enabled: true
-
-  - name: Voice AI — AI Engineer
-    query: 'site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com "Voice" OR "Speech" "AI Engineer" OR "Deployment" OR "Integration"'
-    enabled: true
-
-  # -- Contact Center AI --
-  - name: Contact Center AI — SA & SE
-    query: '"contact center" OR "customer service" "AI" "Solutions Architect" OR "Solutions Engineer" OR "Forward Deployed" remote'
-    enabled: true
-
-  # -- FDE specific (cross-portal) --
-  - name: FDE & Deployed Engineer — All portals
-    query: '"Forward Deployed Engineer" OR "Deployed Engineer" OR "Deployment Engineer" AI site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com OR site:jobs.lever.co'
-    enabled: true
-
-  # -- RemoteFront (aggregator) --
-  - name: RemoteFront — AI & Automation
-    query: 'site:remotefront.com "AI Engineer" OR "Solutions Engineer" OR "Automation" OR "LLM" OR "Agent" remote'
+  - name: Broad — Documentation Program Manager
+    query: '"Documentation Program Manager" OR "Content Program Manager" "AI" OR "platform" OR "developer" remote senior'
     enabled: true
 
 # -- Tracked companies --
 # Companies whose career pages are checked directly.
-# scan_method: playwright (default), websearch, greenhouse_api
-# For Greenhouse companies, add api: field for faster structured JSON access.
+# Prioritized for: AI/ML, cloud, developer platforms, enterprise SaaS — all strong TPM employers.
 
 tracked_companies:
 
-  # -- AI Labs & LLM providers --
+  # -- Big Tech (primary targets) --
+
+  - name: Amazon Web Services (AWS)
+    careers_url: https://www.amazon.jobs/en/teams/aws
+    scan_method: websearch
+    scan_query: 'site:amazon.jobs "Technical Program Manager" AWS remote OR Seattle'
+    notes: "Ashutosh has direct AWS experience — high fit signal."
+    enabled: true
+
+  - name: Google
+    careers_url: https://careers.google.com
+    scan_method: websearch
+    scan_query: 'site:careers.google.com "Technical Program Manager" "AI" OR "ML" OR "platform" remote'
+    notes: "Strong TPM culture. DeepMind, Google Cloud, Workspace all hire TPMs."
+    enabled: true
+
+  - name: Microsoft
+    careers_url: https://careers.microsoft.com
+    scan_method: websearch
+    scan_query: 'site:careers.microsoft.com "Technical Program Manager" "AI" OR "Azure" OR "developer" remote'
+    notes: "Azure, Copilot, GitHub — all strong TPM areas matching Ashutosh's profile."
+    enabled: true
+
+  - name: Meta
+    careers_url: https://www.metacareers.com
+    scan_method: websearch
+    scan_query: 'site:metacareers.com "Technical Program Manager" "AI" OR "platform" OR "developer" remote'
+    notes: "AI infrastructure, developer platforms, Llama ecosystem."
+    enabled: true
+
+  - name: Apple
+    careers_url: https://jobs.apple.com
+    scan_method: websearch
+    scan_query: 'site:jobs.apple.com "Technical Program Manager" "AI" OR "ML" OR "platform"'
+    notes: "Apple Intelligence, developer tools, Siri platform."
+    enabled: true
+
+  # -- AI Labs & LLM Providers --
 
   - name: Anthropic
     careers_url: https://job-boards.greenhouse.io/anthropic
     api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    notes: "Top AI lab. TPM roles in safety, infra, and product programs."
     enabled: true
 
   - name: OpenAI
     careers_url: https://openai.com/careers
     scan_method: websearch
-    scan_query: 'site:openai.com/careers "Solutions" OR "Forward Deployed" OR "AI Engineer"'
+    scan_query: 'site:openai.com/careers "Technical Program Manager" OR "Program Manager"'
+    notes: "GPT, API platform, enterprise — active TPM hiring."
     enabled: true
 
-  # -- Voice AI & Conversational AI --
-
-  - name: PolyAI
-    careers_url: https://job-boards.eu.greenhouse.io/polyai
-    api: https://boards-api.greenhouse.io/v1/boards/polyai/jobs
-    notes: "UK. Voice AI for enterprise contact centers."
+  - name: Cohere
+    careers_url: https://jobs.ashbyhq.com/cohere
+    notes: "Enterprise LLM. Toronto + remote. Strong TPM need for platform programs."
     enabled: true
 
-  - name: Parloa
-    careers_url: https://job-boards.eu.greenhouse.io/parloa
-    api: https://boards-api.greenhouse.io/v1/boards/parloa/jobs
-    notes: "Berlin EMEA. Voice AI enterprise."
+  - name: Mistral AI
+    careers_url: https://jobs.lever.co/mistral
+    notes: "Paris + remote. European AI lab. Growing fast."
     enabled: true
 
-  - name: Intercom
-    careers_url: https://job-boards.greenhouse.io/intercom
-    api: https://boards-api.greenhouse.io/v1/boards/intercom/jobs
-    notes: "Dublin EMEA. Fin AI agent."
-    enabled: true
-
-  - name: Hume AI
-    careers_url: https://job-boards.greenhouse.io/humeai
-    api: https://boards-api.greenhouse.io/v1/boards/humeai/jobs
-    notes: "NYC. Empathic voice AI."
-    enabled: true
-
-  - name: ElevenLabs
-    careers_url: https://jobs.ashbyhq.com/elevenlabs
+  - name: Perplexity AI
+    careers_url: https://www.perplexity.ai/careers
     scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/elevenlabs'
-    notes: "Voice AI TTS leader."
+    scan_query: '"perplexity" "Program Manager" OR "TPM" site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io'
+    notes: "AI search. Fast-growing, TPM roles emerging."
     enabled: true
 
-  - name: Deepgram
-    careers_url: https://jobs.ashbyhq.com/deepgram
-    scan_method: websearch
-    scan_query: 'site:deepgram.com/careers OR "deepgram" "Solutions" OR "AI Engineer" site:jobs.ashbyhq.com'
-    notes: "STT/TTS APIs."
-    enabled: true
+  # -- AI Infrastructure & MLOps --
 
-  - name: Vapi
-    careers_url: https://jobs.ashbyhq.com/vapi
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/vapi'
-    notes: "Voice AI infrastructure."
-    enabled: true
-
-  - name: Bland AI
-    careers_url: https://jobs.ashbyhq.com/bland
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/bland'
-    notes: "Voice phone agents. $65M Series B."
-    enabled: true
-
-  # -- AI-native platforms (FDE/SA teams) --
-
-  - name: Retool
-    careers_url: https://retool.com/careers
-    scan_method: websearch
-    scan_query: 'site:retool.com/careers "Deployed" OR "AI" OR "Solutions"'
-    notes: "London. Popularized Deployed Engineer role."
-    enabled: true
-
-  - name: Airtable
-    careers_url: https://job-boards.greenhouse.io/airtable
-    api: https://boards-api.greenhouse.io/v1/boards/airtable/jobs
-    notes: "No-code + AI platform."
-    enabled: true
-
-  - name: Vercel
-    careers_url: https://job-boards.greenhouse.io/vercel
-    api: https://boards-api.greenhouse.io/v1/boards/vercel/jobs
-    notes: "AI SDK, v0.dev. Frontend AI tooling."
-    enabled: true
-
-  - name: Temporal
-    careers_url: https://job-boards.greenhouse.io/temporal
-    api: https://boards-api.greenhouse.io/v1/boards/temporal/jobs
-    notes: "Workflow orchestration."
+  - name: Weights & Biases
+    careers_url: https://jobs.lever.co/wandb
+    notes: "MLOps platform. Strong TPM fit — program delivery for ML tooling."
     enabled: true
 
   - name: Arize AI
     careers_url: https://job-boards.greenhouse.io/arizeai
     api: https://boards-api.greenhouse.io/v1/boards/arizeai/jobs
-    notes: "LLMOps / AI observability."
+    notes: "LLMOps / AI observability. TPM roles in platform programs."
     enabled: true
 
-  - name: RunPod
-    careers_url: https://job-boards.greenhouse.io/runpod
-    api: https://boards-api.greenhouse.io/v1/boards/runpod/jobs
-    notes: "GPU cloud for AI."
-    enabled: true
-
-  - name: Glean
-    careers_url: https://job-boards.greenhouse.io/gleanwork
-    api: https://boards-api.greenhouse.io/v1/boards/gleanwork/jobs
-    notes: "Enterprise AI search."
-    enabled: true
-
-  # -- Contact Center AI & CX --
-
-  - name: Ada
-    careers_url: https://job-boards.greenhouse.io/ada
+  - name: Hugging Face
+    careers_url: https://apply.workable.com/huggingface
     scan_method: websearch
-    scan_query: '"ada.cx" OR "ada" "AI" "Solutions" OR "Engineer" site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io'
-    notes: "Toronto + remote. AI customer service."
+    scan_query: 'site:apply.workable.com/huggingface "Program Manager" OR "TPM"'
+    notes: "Open-source AI hub. Developer platform TPM fit."
     enabled: true
 
-  - name: LivePerson
-    careers_url: https://liveperson.com/company/careers
+  - name: Runway
+    careers_url: https://jobs.ashbyhq.com/runwayml
     scan_method: websearch
-    scan_query: 'site:liveperson.com/careers OR "liveperson" "Solutions" OR "AI" site:job-boards.greenhouse.io'
-    notes: "Remote EMEA. Conversational AI enterprise."
+    scan_query: 'site:jobs.ashbyhq.com/runwayml "Program Manager"'
+    notes: "Generative AI for video. Growing platform team."
     enabled: true
 
-  - name: Sierra
-    careers_url: https://jobs.ashbyhq.com/sierra
+  - name: Together AI
+    careers_url: https://jobs.ashbyhq.com/togetherai
     scan_method: websearch
-    scan_query: '"sierra.ai" "AI" "Forward Deployed" OR "Applied" OR "Solutions" site:jobs.ashbyhq.com'
-    notes: "Bret Taylor (ex-CEO Salesforce). AI customer agents."
+    scan_query: 'site:jobs.ashbyhq.com/togetherai "Program Manager" OR "TPM"'
+    notes: "AI cloud + inference. Strong TPM fit given Ashutosh's AI inference background."
     enabled: true
 
-  - name: Decagon
-    careers_url: https://jobs.ashbyhq.com/decagon
+  - name: Groq
+    careers_url: https://groq.com/careers
     scan_method: websearch
-    scan_query: '"decagon" "AI" "Forward Deployed" OR "Solutions" site:jobs.ashbyhq.com'
-    notes: "AI customer support agents."
+    scan_query: '"groq" "Program Manager" OR "TPM" site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io'
+    notes: "AI inference chip + cloud. Very close to Ashutosh's current stack."
     enabled: true
 
-  # -- Enterprise comms & contact center --
-
-  - name: Talkdesk
-    careers_url: https://www.talkdesk.com/careers
+  - name: Cerebras Systems
+    careers_url: https://www.cerebras.net/careers
     scan_method: websearch
-    scan_query: 'site:talkdesk.com/careers "AI" OR "Solutions Architect" OR "AI Engineer"'
-    notes: "Lisbon. Contact center AI. EMEA friendly."
+    scan_query: '"cerebras" "Technical Program Manager" OR "TPM" careers'
+    notes: "AI chip + inference. Direct parallel to Ashutosh's current stealth employer."
+    enabled: true
+
+  # -- Cloud & Developer Platforms --
+
+  - name: Vercel
+    careers_url: https://job-boards.greenhouse.io/vercel
+    api: https://boards-api.greenhouse.io/v1/boards/vercel/jobs
+    notes: "Frontend cloud + AI SDK. Developer platform TPM fit."
+    enabled: true
+
+  - name: Cloudflare
+    careers_url: https://www.cloudflare.com/careers
+    scan_method: websearch
+    scan_query: 'site:cloudflare.com/careers "Technical Program Manager" OR "Program Manager" remote'
+    notes: "Edge cloud + AI Workers. Strong platform TPM demand."
+    enabled: true
+
+  - name: Temporal
+    careers_url: https://job-boards.greenhouse.io/temporal
+    api: https://boards-api.greenhouse.io/v1/boards/temporal/jobs
+    notes: "Workflow orchestration platform. Developer-first. TPM fit."
+    enabled: true
+
+  - name: Hashicorp (IBM)
+    careers_url: https://www.hashicorp.com/careers
+    scan_method: websearch
+    scan_query: 'site:hashicorp.com/careers "Technical Program Manager" OR "TPM"'
+    notes: "Infrastructure-as-code. Strong TPM culture."
+    enabled: true
+
+  - name: Databricks
+    careers_url: https://www.databricks.com/company/careers
+    scan_method: websearch
+    scan_query: 'site:databricks.com/company/careers "Technical Program Manager" OR "Program Manager" remote'
+    notes: "Data + AI platform. Lakehouse. Strong TPM org."
+    enabled: true
+
+  - name: Snowflake
+    careers_url: https://careers.snowflake.com
+    scan_method: websearch
+    scan_query: 'site:careers.snowflake.com "Technical Program Manager" remote'
+    notes: "Cloud data platform. Active TPM hiring."
+    enabled: true
+
+  - name: Stripe
+    careers_url: https://stripe.com/jobs
+    scan_method: websearch
+    scan_query: 'site:stripe.com/jobs "Technical Program Manager" OR "TPM" remote'
+    notes: "Developer-first fintech. Strong TPM + developer platform culture."
     enabled: true
 
   - name: Twilio
     careers_url: https://www.twilio.com/en-us/company/jobs
     scan_method: websearch
-    scan_query: 'site:twilio.com/company/jobs "AI" OR "Voice" "Solutions" OR "Architect"'
-    notes: "Voice/messaging infrastructure."
+    scan_query: 'site:twilio.com/company/jobs "Technical Program Manager" OR "TPM"'
+    notes: "Voice/messaging/API platform. Close match to Ashutosh's AWS + API background."
     enabled: true
 
-  - name: Dialpad
-    careers_url: https://www.dialpad.com/careers
-    scan_method: websearch
-    scan_query: '"dialpad" "AI" "Solutions" OR "Engineer" site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com'
-    notes: "Voice AI for business comms."
-    enabled: true
-
-  - name: Gong
-    careers_url: https://www.gong.io/careers
-    scan_method: websearch
-    scan_query: 'site:gong.io/careers "AI" OR "Solutions" OR "Architect"'
-    notes: "Revenue intelligence with voice AI."
-    enabled: true
-
-  - name: Genesys
-    careers_url: https://www.genesys.com/careers
-    scan_method: websearch
-    scan_query: 'site:genesys.com/careers "AI" "Solutions Architect" OR "AI Engineer"'
-    notes: "Contact center cloud + AI."
-    enabled: true
+  # -- Enterprise SaaS (AI-forward) --
 
   - name: Salesforce
     careers_url: https://careers.salesforce.com
     scan_method: websearch
-    scan_query: 'site:careers.salesforce.com "Forward Deployed" OR "AI Engineer" OR "Agentforce"'
-    notes: "Agentforce = AI agents platform."
+    scan_query: 'site:careers.salesforce.com "Technical Program Manager" "AI" OR "Agentforce" OR "platform"'
+    notes: "Agentforce AI platform. Large TPM org."
     enabled: true
 
-  # -- AI infra & LLMOps --
-
-  - name: Langfuse
-    careers_url: https://langfuse.com/careers
+  - name: ServiceNow
+    careers_url: https://careers.servicenow.com
     scan_method: websearch
-    scan_query: '"langfuse" careers OR jobs "engineer" OR "solutions"'
-    notes: "Berlin. LLMOps / observability."
+    scan_query: 'site:careers.servicenow.com "Technical Program Manager" "AI" OR "platform" remote'
+    notes: "Enterprise AI + workflow automation. Strong TPM hiring."
     enabled: true
 
-  - name: Lindy
-    careers_url: https://jobs.ashbyhq.com/lindy
+  - name: Glean
+    careers_url: https://job-boards.greenhouse.io/gleanwork
+    api: https://boards-api.greenhouse.io/v1/boards/gleanwork/jobs
+    notes: "Enterprise AI search. High-growth. TPM roles in platform programs."
+    enabled: true
+
+  - name: Notion
+    careers_url: https://www.notion.so/careers
     scan_method: websearch
-    scan_query: '"lindy.ai" "AI" "Forward Deployed" OR "Solutions" site:jobs.ashbyhq.com'
-    notes: "AI agent management platform."
+    scan_query: 'site:notion.so/careers "Technical Program Manager" OR "Program Manager" "AI"'
+    notes: "Notion AI. Developer platform. Strong docs + knowledge system culture — Ashutosh's sweet spot."
     enabled: true
 
-  - name: Cognigy
-    careers_url: https://careers.cognigy.com
+  - name: Atlassian
+    careers_url: https://www.atlassian.com/company/careers
     scan_method: websearch
-    scan_query: '"cognigy" careers "AI" OR "Solutions" OR "Engineer"'
-    notes: "Dusseldorf EMEA. Conversational AI enterprise."
+    scan_query: 'site:atlassian.com/company/careers "Technical Program Manager" OR "TPM" remote'
+    notes: "Jira, Confluence, Rovo AI. Ashutosh uses their tools daily — cultural fit."
     enabled: true
 
-  - name: Speechmatics
-    careers_url: https://www.speechmatics.com/company/careers
+  - name: GitHub (Microsoft)
+    careers_url: https://github.com/about/careers
     scan_method: websearch
-    scan_query: '"speechmatics" careers OR jobs "engineer" OR "solutions"'
-    notes: "Cambridge UK. Speech recognition platform."
+    scan_query: '"github" careers "Technical Program Manager" OR "TPM" "AI" OR "Copilot" OR "developer"'
+    notes: "GitHub Copilot, developer platform. Strong TPM + docs culture match."
     enabled: true
 
-  # -- No-Code/Low-Code & Automation --
-
-  - name: n8n
-    careers_url: https://jobs.ashbyhq.com/n8n
+  - name: Linear
+    careers_url: https://linear.app/careers
     scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/n8n'
-    notes: "Berlin + remote EU/US. Workflow automation."
+    scan_query: 'site:linear.app/careers "Program Manager" OR "TPM"'
+    notes: "Developer productivity tool. Fast-growing. Strong eng culture."
     enabled: true
 
-  - name: Zapier
-    careers_url: https://jobs.ashbyhq.com/zapier
-    scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/zapier'
-    notes: "Remote-first. Automation platform leader."
-    enabled: true
-
-  - name: Make.com (Celonis)
-    careers_url: https://www.make.com/en/careers
-    scan_method: websearch
-    scan_query: 'site:make.com/en/careers OR "make.com" "engineer" OR "solutions" site:jobs.ashbyhq.com'
-    notes: "Celonis parent company. Automation platform."
-    enabled: true
-
-  # -- Ashby-based (Playwright direct) --
-
-  - name: Cohere
-    careers_url: https://jobs.ashbyhq.com/cohere
-    notes: "AI/LLM provider. Toronto + remote."
-    enabled: true
+  # -- AI-native platforms (Developer Tools) --
 
   - name: LangChain
     careers_url: https://jobs.ashbyhq.com/langchain
-    notes: "LangChain/LangSmith framework."
+    notes: "LangChain/LangSmith LLM framework. TPM for platform programs."
     enabled: true
 
   - name: Pinecone
     careers_url: https://jobs.ashbyhq.com/pinecone
-    notes: "Vector database."
+    notes: "Vector database for AI. Platform TPM fit."
     enabled: true
 
-  # -- Lever-based (Playwright direct) --
-
-  - name: Mistral AI
-    careers_url: https://jobs.lever.co/mistral
-    notes: "Paris. European AI lab."
-    enabled: true
-
-  - name: Weights & Biases
-    careers_url: https://jobs.lever.co/wandb
-    notes: "MLOps platform."
-    enabled: true
-
-  - name: Palantir
-    careers_url: https://jobs.lever.co/palantir
-    notes: "FDE roles. Mostly US/London."
-    enabled: true
-
-  # -- European tech (EMEA-friendly) --
-
-  - name: Factorial
-    careers_url: https://job-boards.greenhouse.io/factorial
+  - name: Cursor
+    careers_url: https://www.cursor.com/careers
     scan_method: websearch
-    scan_query: 'site:jobs.greenhouse.io/factorial'
-    notes: "Barcelona. HR SaaS unicorn."
+    scan_query: '"cursor" "Program Manager" OR "TPM" site:jobs.ashbyhq.com OR careers'
+    notes: "AI code editor. Fast-growing developer tool."
     enabled: true
 
-  - name: Attio
-    careers_url: https://jobs.ashbyhq.com/attio
+  - name: Replit
+    careers_url: https://replit.com/site/careers
     scan_method: websearch
-    scan_query: 'site:attio.com/careers OR site:jobs.ashbyhq.com/attio'
-    notes: "Remote EU. AI-native CRM. Series B $52M."
+    scan_query: '"replit" "Program Manager" OR "TPM" site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io'
+    notes: "AI-powered coding platform. Developer experience TPM fit."
     enabled: true
 
-  - name: Tinybird
-    careers_url: https://jobs.ashbyhq.com/tinybird
+  # -- Semiconductor & AI Hardware (Ashutosh's domain background) --
+
+  - name: NVIDIA
+    careers_url: https://www.nvidia.com/en-us/about-nvidia/careers
     scan_method: websearch
-    scan_query: 'site:tinybird.co/careers OR site:jobs.ashbyhq.com/tinybird'
-    notes: "Remote. Real-time data platform."
+    scan_query: 'site:nvidia.com/en-us/about-nvidia/careers "Technical Program Manager" "AI" OR "platform" OR "developer"'
+    notes: "GPU + CUDA + AI developer platform. Ashutosh's semiconductor background is a direct signal."
     enabled: true
 
-  - name: Clarity AI
-    careers_url: https://jobs.lever.co/clarity-ai
+  - name: AMD
+    careers_url: https://careers.amd.com
     scan_method: websearch
-    scan_query: 'site:clarity.ai/careers OR site:jobs.lever.co/clarity-ai'
-    notes: "Madrid/Remote. Sustainability analytics with AI."
+    scan_query: 'site:careers.amd.com "Technical Program Manager" "AI" OR "platform" OR "developer tools"'
+    notes: "Semiconductor + AI accelerators. Matches Ashutosh's hardware domain knowledge."
     enabled: true
 
-  - name: Travelperk
-    careers_url: https://jobs.ashbyhq.com/travelperk
+  - name: Qualcomm
+    careers_url: https://careers.qualcomm.com
     scan_method: websearch
-    scan_query: 'site:jobs.ashbyhq.com/travelperk'
-    notes: "Barcelona. Business travel unicorn."
+    scan_query: 'site:careers.qualcomm.com "Technical Program Manager" "AI" OR "platform"'
+    notes: "Semiconductor. On-device AI. Hardware TPM fit."
     enabled: true
+
+  - name: SambaNova Systems
+    careers_url: https://sambanova.ai/careers
+    scan_method: websearch
+    scan_query: '"sambanova" "Technical Program Manager" OR "TPM" OR "Program Manager"'
+    notes: "SKIP — current employer. Monitor only for internal role changes."
+    enabled: false
+
+  # -- Documentation & Knowledge Platforms --
+
+  - name: Readme.com
+    careers_url: https://readme.com/careers
+    scan_method: websearch
+    scan_query: '"readme.com" "Program Manager" OR "TPM" careers'
+    notes: "Developer documentation platform. Direct overlap with Ashutosh's docs + TPM background."
+    enabled: true
+
+  - name: Mintlify
+    careers_url: https://mintlify.com/careers
+    scan_method: websearch
+    scan_query: '"mintlify" "Program Manager" OR "TPM" careers'
+    notes: "Modern docs platform. Ashutosh has direct hands-on experience here."
+    enabled: true
+
+  - name: Confluence / Atlassian (Docs)
+    careers_url: https://www.atlassian.com/company/careers
+    scan_method: websearch
+    scan_query: '"atlassian" "Program Manager" "Confluence" OR "documentation" OR "knowledge"'
+    notes: "Duplicate of Atlassian above — targeted specifically at docs-adjacent TPM roles."
+    enabled: false
